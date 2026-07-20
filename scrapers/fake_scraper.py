@@ -7,19 +7,27 @@ class FakeScraper(BaseScraper):
 
         return [
             {
-                "source": "Fake",
-                "title": "Piso de prueba en Gràcia",
-                "price": 1100,
-                "neighborhood": "Gràcia",
-                "bedrooms": 2,
-                "url": "https://ejemplo.com/gracia",
-            },
-            {
-                "source": "Fake",
-                "title": "Departamento prueba Eixample",
-                "price": 1200,
+                "source": "Habitaclia",
+                "title": "Piso luminoso cerca de Passeig de Sant Joan",
+                "price": 1150,
                 "neighborhood": "Eixample",
                 "bedrooms": 2,
+                "bathrooms": 1,
+                "surface_m2": 65,
+                "furnished": True,
+                "available_from": "2026-09-01",
                 "url": "https://ejemplo.com/eixample",
+            },
+            {
+                "source": "Habitaclia",
+                "title": "Departamento tranquilo en Gràcia",
+                "price": 1200,
+                "neighborhood": "Gràcia",
+                "bedrooms": 2,
+                "bathrooms": 1,
+                "surface_m2": 55,
+                "furnished": False,
+                "available_from": "2026-09-01",
+                "url": "https://ejemplo.com/gracia",
             },
         ]

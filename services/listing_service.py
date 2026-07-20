@@ -8,9 +8,22 @@ def create_listing(
     price,
     neighborhood,
     bedrooms,
-    url,
+    bathrooms=None,
+    surface_m2=None,
+    furnished=None,
+    available_from=None,
+    url=None,
 ):
+
     session = get_session()
+
+    existing = session.query(Listing).filter_by(
+        url=url
+    ).first()
+
+    if existing:
+        session.close()
+        return
 
     listing = Listing(
         source=source,
@@ -18,6 +31,10 @@ def create_listing(
         price=price,
         neighborhood=neighborhood,
         bedrooms=bedrooms,
+        bathrooms=bathrooms,
+        surface_m2=surface_m2,
+        furnished=furnished,
+        available_from=available_from,
         url=url,
     )
 
@@ -36,6 +53,10 @@ def save_listings(listings):
             price=item["price"],
             neighborhood=item["neighborhood"],
             bedrooms=item["bedrooms"],
+            bathrooms=item.get("bathrooms"),
+            surface_m2=item.get("surface_m2"),
+            furnished=item.get("furnished"),
+            available_from=item.get("available_from"),
             url=item["url"],
         )
 
