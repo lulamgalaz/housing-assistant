@@ -6,9 +6,9 @@ def matches_preferences(listing, preference):
     if listing.bedrooms < preference.min_bedrooms:
         return False
 
-    allowed = preference.neighborhoods.split(",")
+    neighborhoods = preference.neighborhoods.split(",")
 
-    if listing.neighborhood not in allowed:
+    if listing.neighborhood not in neighborhoods:
         return False
 
     return True

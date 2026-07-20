@@ -41,7 +41,8 @@ class Listing(Base):
         unique=True
     )
 
-    class Preference(Base):
+
+class Preference(Base):
 
     __tablename__ = "preferences"
 
@@ -57,4 +58,6 @@ class Listing(Base):
 
     min_bedrooms: Mapped[int]
 
-    neighborhoods: Mapped[str]
+    neighborhoods: Mapped[str] = mapped_column(
+        String(300)
+    )

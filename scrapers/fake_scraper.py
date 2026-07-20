@@ -21,7 +21,7 @@ class FakeScraper(BaseScraper):
             {
                 "source": "Habitaclia",
                 "title": "Departamento tranquilo en Gràcia",
-                "price": 1200,
+                "price": 1500,
                 "neighborhood": "Gràcia",
                 "bedrooms": 2,
                 "bathrooms": 1,
