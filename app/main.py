@@ -1,15 +1,55 @@
 import streamlit as st
 
+from database.session import init_database
+from services.listing_service import get_listings, save_listings
+from scrapers.fake_scraper import FakeScraper
+
+
+init_database()
+
+
 st.set_page_config(
     page_title="Housing Assistant",
     page_icon="🏠",
-    layout="wide",
 )
+
 
 st.title("🏠 Housing Assistant")
 
-st.write("## Bienvenida")
 
-st.success("La aplicación está funcionando correctamente.")
+if st.button("Actualizar anuncios"):
 
-st.info("Próximamente aparecerán aquí los anuncios.")
+    scraper = FakeScraper()
+
+    listings = scraper.scrape()
+
+    save_listings(listings)
+
+    st.success(
+        f"{len(listings)} anuncios actualizados"
+    )
+
+
+st.subheader("Anuncios")
+
+
+listings = get_listings()
+
+
+for listing in listings:
+
+    st.write(
+        f"""
+        ### {listing.title}
+
+        💶 {listing.price} €
+
+        📍 {listing.neighborhood}
+
+        🛏 {listing.bedrooms} habitaciones
+
+        Fuente: {listing.source}
+
+        {listing.url}
+        """
+    )
