@@ -1,14 +1,15 @@
+from services.score import calculate_score
+
+
 def matches_preferences(listing, preference):
 
-    if listing.price > preference.max_price:
-        return False
+    score, reasons = calculate_score(
+        listing,
+        preference,
+    )
 
-    if listing.bedrooms < preference.min_bedrooms:
-        return False
-
-    neighborhoods = preference.neighborhoods.split(",")
-
-    if listing.neighborhood not in neighborhoods:
-        return False
-
-    return True
+    return {
+        "match": score >= 50,
+        "score": score,
+        "reasons": reasons,
+    }

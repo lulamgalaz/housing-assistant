@@ -1,5 +1,6 @@
 from database.models import Listing
 from database.session import get_session
+from services.normalizer import normalize_listing
 
 
 def create_listing(
@@ -7,6 +8,7 @@ def create_listing(
     title,
     price,
     neighborhood,
+    district,
     bedrooms,
     bathrooms=None,
     surface_m2=None,
@@ -30,6 +32,7 @@ def create_listing(
         title=title,
         price=price,
         neighborhood=neighborhood,
+        district=district,
         bedrooms=bedrooms,
         bathrooms=bathrooms,
         surface_m2=surface_m2,
@@ -47,11 +50,14 @@ def save_listings(listings):
 
     for item in listings:
 
+        item = normalize_listing(item)
+
         create_listing(
             source=item["source"],
             title=item["title"],
             price=item["price"],
             neighborhood=item["neighborhood"],
+            district=item.get("district"),
             bedrooms=item["bedrooms"],
             bathrooms=item.get("bathrooms"),
             surface_m2=item.get("surface_m2"),

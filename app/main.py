@@ -1,24 +1,39 @@
 import streamlit as st
 
 from database.session import init_database
-from services.listing_service import get_listings, save_listings
-from scrapers.fake_scraper import FakeScraper
-from services.preference_service import create_preference
-from services.preference_service import get_preferences
+
+from services.listing_service import (
+    get_listings,
+    save_listings,
+)
+
+from services.preference_service import (
+    create_preference,
+    get_preferences,
+)
+
 from services.matcher import matches_preferences
 
+from scrapers.pisos_scraper import PisosScraper
+
+
+# Inicializar la base de datos
 init_database()
 
 
+# Configuración de Streamlit
 st.set_page_config(
     page_title="Housing Assistant",
-    
     page_icon="🏠",
 )
 
 
 st.title("🏠 Housing Assistant")
 
+
+# -----------------------------
+# Guardar preferencias
+# -----------------------------
 if st.button("Guardar búsqueda"):
 
     create_preference(
@@ -29,9 +44,17 @@ if st.button("Guardar búsqueda"):
     )
 
     st.success("Búsqueda guardada")
+
+
+# -----------------------------
+# Actualizar anuncios
+# -----------------------------
 if st.button("Actualizar anuncios"):
 
-    scraper = FakeScraper()
+    scraper = PisosScraper(
+        city="barcelona_capital",
+        max_pages=1,
+    )
 
     listings = scraper.scrape()
 
@@ -42,11 +65,12 @@ if st.button("Actualizar anuncios"):
     )
 
 
+# -----------------------------
+# Mostrar anuncios
+# -----------------------------
 st.subheader("Anuncios")
 
-
 listings = get_listings()
-
 preferences = get_preferences()
 
 
@@ -59,7 +83,7 @@ if preferences:
         for listing in listings
         if matches_preferences(
             listing,
-            preference
+            preference,
         )
     ]
 
@@ -68,16 +92,16 @@ for listing in listings:
 
     st.write(
         f"""
-        ### {listing.title}
+### {listing.title}
 
-        💶 {listing.price} €
+💶 **{listing.price} €**
 
-        📍 {listing.neighborhood}
+📍 {listing.neighborhood}
 
-        🛏 {listing.bedrooms} habitaciones
+🛏 {listing.bedrooms} habitaciones
 
-        Fuente: {listing.source}
+**Fuente:** {listing.source}
 
-        {listing.url}
-        """
+{listing.url}
+"""
     )

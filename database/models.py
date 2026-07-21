@@ -23,6 +23,7 @@ class Listing(Base):
     neighborhood: Mapped[str] = mapped_column(
         String(100)
     )
+    district: Mapped[str | None]
 
     price: Mapped[int]
 
