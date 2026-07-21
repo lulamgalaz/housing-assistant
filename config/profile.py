@@ -1,25 +1,45 @@
-MAX_PRICE = 1200
+SEARCH_PROFILES = {
 
-MIN_BEDROOMS = 2
+    "master_10m": {
 
-PRIORITY_NEIGHBORHOODS = {
-    "Gràcia",
-    "Vila de Gràcia",
-    "Camp d'en Grassot",
-    "Sagrada Família",
-    "Fort Pienc",
-    "Sant Antoni",
-    "La Nova Esquerra de l'Eixample",
-    "La Dreta de l'Eixample",
-    "Poble-sec",
-}
+        "city": "Barcelona",
 
-SECONDARY_NEIGHBORHOODS = {
-    "Sant Andreu",
-    "El Clot",
-    "Sants",
-    "Hostafrancs",
-    "Poblenou",
-    "El Baix Guinardó",
-    "La Marina del Port-Parc de Montjuïc",
+        "max_price": 1200,
+
+        "min_bedrooms": 2,
+
+        "min_surface": 60,
+
+        "duration_months": 10,
+
+    },
+
+    "master_3m": {
+
+        "city": "Barcelona",
+
+        "max_price": 1800,
+
+        "min_bedrooms": 3,
+
+        "min_surface": 80,
+
+        "duration_months": 3,
+
+    },
+
+    "master_6m": {
+
+        "city": "Barcelona",
+
+        "max_price": 1400,
+
+        "min_bedrooms": 2,
+
+        "min_surface": 60,
+
+        "duration_months": 6,
+
+    },
+
 }

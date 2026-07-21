@@ -1,6 +1,9 @@
-from config.profile import (
+from config.current_profile import CURRENT_PROFILE
+
+from config.neighborhoods import (
     PRIORITY_NEIGHBORHOODS,
     SECONDARY_NEIGHBORHOODS,
+    AVOID_NEIGHBORHOODS,
 )
 
 
@@ -49,6 +52,11 @@ def calculate_score(listing, preference):
         score += 15
         reasons.append("📍 Barrio aceptable")
 
+    elif neighborhood in AVOID_NEIGHBORHOODS:
+
+        score -= 100
+        reasons.append("🚫 Barrio descartado")
+
     # -------------------------
     # Amueblado
     # -------------------------
@@ -64,11 +72,13 @@ def calculate_score(listing, preference):
 
     if listing.surface_m2:
 
-        if listing.surface_m2 >= 60:
+        if listing.surface_m2 >= CURRENT_PROFILE["min_surface"]:
+
             score += 15
             reasons.append("📐 Buena superficie")
 
         elif listing.surface_m2 >= 45:
+
             score += 8
             reasons.append("📐 Superficie aceptable")
 

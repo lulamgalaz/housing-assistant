@@ -23,6 +23,7 @@ class Listing(Base):
     neighborhood: Mapped[str] = mapped_column(
         String(100)
     )
+
     district: Mapped[str | None]
 
     price: Mapped[int]
@@ -37,9 +38,33 @@ class Listing(Base):
 
     available_from: Mapped[str | None]
 
+    # -----------------------------
+    # Nuevos campos V1
+    # -----------------------------
+
+    balcony: Mapped[bool | None]
+
+    terrace: Mapped[bool | None]
+
+    elevator: Mapped[bool | None]
+
+    air_conditioning: Mapped[bool | None]
+
+    separate_kitchen: Mapped[bool | None]
+
+    expenses_included: Mapped[bool | None]
+
+    contract_months: Mapped[int | None]
+
+    contract_type: Mapped[str | None]
+
+    floor: Mapped[int | None]
+
+    exterior: Mapped[bool | None]
+
     url: Mapped[str] = mapped_column(
         String(1000),
-        unique=True
+        unique=True,
     )
 
 

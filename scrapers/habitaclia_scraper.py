@@ -97,15 +97,22 @@ class HabitacliaScraper(BaseScraper):
         price = self._parse_price(price_el.inner_text()) if price_el else None
 
         return {
-            "source": "Habitaclia",
-            "title": title_el.inner_text().strip() if title_el else "Sin título",
-            "price": price,
-            "neighborhood": location_el.inner_text().strip() if location_el else "N/A",
-            "bedrooms": bedrooms or 0,
-            "bathrooms": bathrooms,
-            "surface_m2": surface_m2,
-            "furnished": None,
+                        "furnished": None,
             "available_from": None,
+
+            "balcony": None,
+            "terrace": None,
+            "elevator": None,
+            "air_conditioning": None,
+            "separate_kitchen": None,
+            "expenses_included": None,
+
+            "contract_months": None,
+            "contract_type": None,
+
+            "floor": None,
+            "exterior": None,
+
             "url": href,
         }
 

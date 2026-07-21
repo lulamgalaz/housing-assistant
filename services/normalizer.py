@@ -1,44 +1,113 @@
-import re
+def normalize_listing(item):
+
+    return {
+
+        # -----------------------------
+        # Información básica
+        # -----------------------------
+
+        "source": item.get(
+            "source",
+            "Unknown"
+        ),
+
+        "title": item.get(
+            "title",
+            "Sin título"
+        ),
+
+        "price": item.get(
+            "price"
+        ),
+
+        "neighborhood": item.get(
+            "neighborhood",
+            "N/A"
+        ),
+
+        "district": item.get(
+            "district"
+        ),
+
+        "bedrooms": item.get(
+            "bedrooms",
+            0
+        ),
+
+        "bathrooms": item.get(
+            "bathrooms"
+        ),
+
+        "surface_m2": item.get(
+            "surface_m2"
+        ),
+
+        "furnished": item.get(
+            "furnished"
+        ),
+
+        "available_from": item.get(
+            "available_from"
+        ),
 
 
-def normalize_listing(listing: dict) -> dict:
-    """
-    Recibe un anuncio de cualquier scraper y devuelve
-    un anuncio con datos normalizados.
-    """
+        # -----------------------------
+        # Características vivienda
+        # -----------------------------
 
-    normalized = listing.copy()
+        "balcony": item.get(
+            "balcony",
+            False
+        ),
 
-    normalized["neighborhood"] = normalize_neighborhood(
-        listing.get("neighborhood")
-    )
+        "terrace": item.get(
+            "terrace",
+            False
+        ),
 
-    normalized["district"] = extract_district(
-        listing.get("neighborhood")
-    )
+        "elevator": item.get(
+            "elevator"
+        ),
 
-    return normalized
+        "air_conditioning": item.get(
+            "air_conditioning"
+        ),
+
+        "separate_kitchen": item.get(
+            "separate_kitchen"
+        ),
+
+        "expenses_included": item.get(
+            "expenses_included"
+        ),
 
 
-def normalize_neighborhood(text):
+        # -----------------------------
+        # Contrato
+        # -----------------------------
 
-    if not text:
-        return None
+        "contract_months": item.get(
+            "contract_months"
+        ),
 
-    return text.split("(")[0].strip()
+        "contract_type": item.get(
+            "contract_type"
+        ),
 
 
-def extract_district(text):
+        # -----------------------------
+        # Otros
+        # -----------------------------
 
-    if not text:
-        return None
+        "floor": item.get(
+            "floor"
+        ),
 
-    match = re.search(
-        r"Distrito (.*?)\.",
-        text
-    )
+        "exterior": item.get(
+            "exterior"
+        ),
 
-    if match:
-        return match.group(1).strip()
-
-    return None
+        "url": item.get(
+            "url"
+        ),
+    }
