@@ -54,7 +54,7 @@ st.markdown(
 
     h1 {
     font-family: "Outfit", sans-serif;
-    font-optical-sizing: auto;
+    font-optical-sizing: 300px;
     font-weight: 700;
     font-style: normal;
     text-align: center;
@@ -70,7 +70,7 @@ st.markdown(
         font-weight: 400;
         font-style: normal;
     }
-    
+
 [data-testid="stCaptionContainer"] {
     text-align: center;
 }
