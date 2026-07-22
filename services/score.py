@@ -12,7 +12,7 @@ def calculate_score(listing, preference):
 
 
     # -------------------------
-    # Precio (40 puntos)
+    # Precio (30 puntos)
     # -------------------------
 
     if listing.price is not None:
@@ -25,7 +25,7 @@ def calculate_score(listing, preference):
 
         if difference <= 0:
 
-            score += 40
+            score += 30
 
             reasons.append(
                 "💶 Dentro del presupuesto"
@@ -34,7 +34,7 @@ def calculate_score(listing, preference):
 
         elif difference <= 100:
 
-            score += 25
+            score += 20
 
             reasons.append(
                 "💶 Hasta 100€ sobre presupuesto"
@@ -196,7 +196,7 @@ def calculate_score(listing, preference):
 
     elif neighborhood in AVOID_NEIGHBORHOODS:
 
-        score -= 30
+        score -= 20
 
         reasons.append(
             "🚫 Barrio evitado"
@@ -210,7 +210,7 @@ def calculate_score(listing, preference):
 
     if listing.furnished:
 
-        score += 5
+        score += 10
 
         reasons.append(
             "🛋 Amueblado"
@@ -228,7 +228,7 @@ def calculate_score(listing, preference):
 
     if listing.terrace:
 
-        score += 8
+        score += 5
 
         reasons.append(
             "🌞 Terraza"
