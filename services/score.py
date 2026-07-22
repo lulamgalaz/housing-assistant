@@ -12,56 +12,107 @@ def calculate_score(listing, preference):
 
 
     # -------------------------
-    # Precio
+    # Precio (30 puntos)
     # -------------------------
 
     if listing.price is not None:
 
-        if listing.price <= preference.max_price:
+        difference = (
+            listing.price
+            - preference.max_price
+        )
+
+
+        if difference <= 0:
 
             score += 30
+
             reasons.append(
                 "💶 Dentro del presupuesto"
             )
 
-        elif listing.price <= preference.max_price + 150:
 
-            score += 15
+        elif difference <= 100:
+
+            score += 20
+
             reasons.append(
-                "💶 Apenas supera el presupuesto"
+                "💶 Ligeramente superior al presupuesto"
             )
+
+
+        elif difference <= 250:
+
+            score += 10
+
+            reasons.append(
+                "💶 Algo superior al presupuesto"
+            )
+
 
         else:
 
-            score -= 50
             reasons.append(
-                "💸 Supera presupuesto"
+                "💸 Superior al presupuesto"
             )
 
 
+    else:
+
+        reasons.append(
+            "💸 Precio no informado"
+        )
+
+
+
     # -------------------------
-    # Habitaciones
+    # Habitaciones (25 puntos)
     # -------------------------
 
     if listing.bedrooms is not None:
 
+
         if listing.bedrooms >= preference.min_bedrooms:
 
             score += 25
+
             reasons.append(
                 "🛏 Habitaciones suficientes"
             )
 
-        else:
 
-            score -= 40
+        elif (
+            preference.min_bedrooms
+            - listing.bedrooms
+            == 1
+        ):
+
+            score += 15
+
             reasons.append(
-                "🛏 Menos habitaciones de las necesarias"
+                "🛏 Falta una habitación"
             )
 
 
+        else:
+
+            score += 5
+
+            reasons.append(
+                "🛏 Menos habitaciones"
+            )
+
+
+    else:
+
+        reasons.append(
+            "🛏 Habitaciones sin datos"
+        )
+
+
+
     # -------------------------
-    # Superficie
+    # Superficie (20 puntos)
     # -------------------------
 
     if (
@@ -69,69 +120,116 @@ def calculate_score(listing, preference):
         and listing.surface_m2
     ):
 
-        if listing.surface_m2 >= preference.min_surface:
 
-            score += 15
+        difference = (
+            listing.surface_m2
+            - preference.min_surface
+        )
+
+
+        if difference >= 0:
+
+            score += 20
+
             reasons.append(
                 "📐 Buena superficie"
             )
 
+
+        elif difference >= -10:
+
+            score += 12
+
+            reasons.append(
+                "📐 Superficie cercana"
+            )
+
+
         else:
 
-            score -= 10
+            score += 5
+
             reasons.append(
                 "📐 Superficie inferior"
             )
 
 
+
     # -------------------------
-    # Barrio
+    # Barrio (20 puntos)
     # -------------------------
 
-    neighborhood = (
+    listing_neighborhood = (
         listing.neighborhood
         or ""
     )
 
 
-    if neighborhood in PRIORITY_NEIGHBORHOODS:
+    preferred_neighborhoods = []
 
-        score += 25
+
+    if preference.neighborhoods:
+
+        preferred_neighborhoods = [
+            n.strip()
+            for n in preference.neighborhoods.split(",")
+        ]
+
+
+
+    if listing_neighborhood in preferred_neighborhoods:
+
+        score += 30
+
+        reasons.append(
+            "📍 Barrio elegido"
+        )
+
+
+    elif listing_neighborhood in PRIORITY_NEIGHBORHOODS:
+
+        score += 20
+
         reasons.append(
             "📍 Barrio prioritario"
         )
 
 
-    elif neighborhood in SECONDARY_NEIGHBORHOODS:
+    elif listing_neighborhood in SECONDARY_NEIGHBORHOODS:
 
-        score += 15
+        score += 10
+
         reasons.append(
             "📍 Barrio aceptable"
         )
 
 
-    elif neighborhood in AVOID_NEIGHBORHOODS:
+    elif listing_neighborhood in AVOID_NEIGHBORHOODS:
 
-        score -= 100
+        score -= 20
+
         reasons.append(
-            "🚫 Barrio descartado"
+            "🚫 Barrio evitado"
         )
 
 
+
     # -------------------------
-    # Amueblado
+    # Amueblado (5 puntos)
     # -------------------------
 
     if listing.furnished:
 
-        score += 10
+        score += 5
+
         reasons.append(
             "🛋 Amueblado"
         )
 
 
+
     # -------------------------
-    # Duración contrato
+    # Duración contrato (5 puntos)
     # -------------------------
 
     if (
@@ -139,12 +237,32 @@ def calculate_score(listing, preference):
         and listing.contract_months
     ):
 
-        if listing.contract_months >= preference.duration_months:
+        if (
+            listing.contract_months
+            >= preference.duration_months
+        ):
 
-            score += 10
+            score += 5
+
             reasons.append(
                 "📅 Duración compatible"
             )
+
+
+
+    # -------------------------
+    # Normalización final
+    # -------------------------
+
+    if score < 0:
+
+        score = 0
+
+
+    if score > 100:
+
+        score = 100
+
 
 
     return score, reasons
