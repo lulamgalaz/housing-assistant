@@ -38,9 +38,6 @@ class Listing(Base):
 
     available_from: Mapped[str | None]
 
-    # -----------------------------
-    # Nuevos campos V1
-    # -----------------------------
 
     balcony: Mapped[bool | None]
 
@@ -62,28 +59,46 @@ class Listing(Base):
 
     exterior: Mapped[bool | None]
 
+
     url: Mapped[str] = mapped_column(
         String(1000),
         unique=True,
     )
 
 
+
 class Preference(Base):
 
     __tablename__ = "preferences"
+
 
     id: Mapped[int] = mapped_column(
         primary_key=True
     )
 
+
+    profile_name: Mapped[str | None] = mapped_column(
+        String(100)
+    )
+
+
     city: Mapped[str] = mapped_column(
         String(100)
     )
 
+
     max_price: Mapped[int]
+
 
     min_bedrooms: Mapped[int]
 
+
+    min_surface: Mapped[int | None]
+
+
+    duration_months: Mapped[int | None]
+
+
     neighborhoods: Mapped[str] = mapped_column(
-        String(300)
+        String(500)
     )

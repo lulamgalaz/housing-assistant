@@ -1,5 +1,3 @@
-from config.current_profile import CURRENT_PROFILE
-
 from config.neighborhoods import (
     PRIORITY_NEIGHBORHOODS,
     SECONDARY_NEIGHBORHOODS,
@@ -12,6 +10,7 @@ def calculate_score(listing, preference):
     score = 0
     reasons = []
 
+
     # -------------------------
     # Precio
     # -------------------------
@@ -19,12 +18,26 @@ def calculate_score(listing, preference):
     if listing.price is not None:
 
         if listing.price <= preference.max_price:
+
             score += 30
-            reasons.append("💶 Dentro del presupuesto")
+            reasons.append(
+                "💶 Dentro del presupuesto"
+            )
 
         elif listing.price <= preference.max_price + 150:
+
             score += 15
-            reasons.append("💶 Apenas supera el presupuesto")
+            reasons.append(
+                "💶 Apenas supera el presupuesto"
+            )
+
+        else:
+
+            score -= 50
+            reasons.append(
+                "💸 Supera presupuesto"
+            )
+
 
     # -------------------------
     # Habitaciones
@@ -33,29 +46,77 @@ def calculate_score(listing, preference):
     if listing.bedrooms is not None:
 
         if listing.bedrooms >= preference.min_bedrooms:
-            score += 20
-            reasons.append("🛏 Habitaciones suficientes")
+
+            score += 25
+            reasons.append(
+                "🛏 Habitaciones suficientes"
+            )
+
+        else:
+
+            score -= 40
+            reasons.append(
+                "🛏 Menos habitaciones de las necesarias"
+            )
+
+
+    # -------------------------
+    # Superficie
+    # -------------------------
+
+    if (
+        preference.min_surface
+        and listing.surface_m2
+    ):
+
+        if listing.surface_m2 >= preference.min_surface:
+
+            score += 15
+            reasons.append(
+                "📐 Buena superficie"
+            )
+
+        else:
+
+            score -= 10
+            reasons.append(
+                "📐 Superficie inferior"
+            )
+
 
     # -------------------------
     # Barrio
     # -------------------------
 
-    neighborhood = listing.neighborhood or ""
+    neighborhood = (
+        listing.neighborhood
+        or ""
+    )
+
 
     if neighborhood in PRIORITY_NEIGHBORHOODS:
 
         score += 25
-        reasons.append("📍 Barrio prioritario")
+        reasons.append(
+            "📍 Barrio prioritario"
+        )
+
 
     elif neighborhood in SECONDARY_NEIGHBORHOODS:
 
         score += 15
-        reasons.append("📍 Barrio aceptable")
+        reasons.append(
+            "📍 Barrio aceptable"
+        )
+
 
     elif neighborhood in AVOID_NEIGHBORHOODS:
 
         score -= 100
-        reasons.append("🚫 Barrio descartado")
+        reasons.append(
+            "🚫 Barrio descartado"
+        )
+
 
     # -------------------------
     # Amueblado
@@ -64,22 +125,26 @@ def calculate_score(listing, preference):
     if listing.furnished:
 
         score += 10
-        reasons.append("🛋 Amueblado")
+        reasons.append(
+            "🛋 Amueblado"
+        )
+
 
     # -------------------------
-    # Superficie
+    # Duración contrato
     # -------------------------
 
-    if listing.surface_m2:
+    if (
+        preference.duration_months
+        and listing.contract_months
+    ):
 
-        if listing.surface_m2 >= CURRENT_PROFILE["min_surface"]:
+        if listing.contract_months >= preference.duration_months:
 
-            score += 15
-            reasons.append("📐 Buena superficie")
+            score += 10
+            reasons.append(
+                "📅 Duración compatible"
+            )
 
-        elif listing.surface_m2 >= 45:
-
-            score += 8
-            reasons.append("📐 Superficie aceptable")
 
     return score, reasons
