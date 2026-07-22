@@ -231,15 +231,6 @@ if preferences:
             preference,
         )
 
-
-        st.write(
-            "DEBUG SCORE",
-            listing.title,
-            result["score"],
-            result["reasons"]
-        )
-
-
         ranked_listings.append(
             {
                 "listing": listing,
