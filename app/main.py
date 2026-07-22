@@ -249,11 +249,11 @@ if preferences:
             preference,
         )
 
-         st.write(
+        st.write(
             listing.title,
             result["match"],
             result["reasons"]
-            )
+        )
 
         if result["match"]:
 
