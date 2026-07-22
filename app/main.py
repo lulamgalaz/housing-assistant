@@ -275,7 +275,9 @@ if not listings:
     st.info(
         'No hay anuncios. Guardá una búsqueda y actualizá.'
     )
-
+    
+st.write("Anuncios:", len(get_listings()))
+st.write("Preferencias:", len(get_preferences()))
 
 cards_html = "".join(
 
