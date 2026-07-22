@@ -7,21 +7,12 @@ from config.neighborhoods import (
 
 def calculate_score(listing, preference):
 
-    print(
-        "ENTRANDO SCORE:",
-        listing.title,
-        listing.price,
-        listing.bedrooms,
-        listing.surface_m2,
-        listing.neighborhood,
-    )
-
     score = 0
     reasons = []
 
 
     # -------------------------
-    # Precio (30 puntos)
+    # Precio (40 puntos)
     # -------------------------
 
     if listing.price is not None:
@@ -34,7 +25,7 @@ def calculate_score(listing, preference):
 
         if difference <= 0:
 
-            score += 30
+            score += 40
 
             reasons.append(
                 "💶 Dentro del presupuesto"
@@ -43,10 +34,10 @@ def calculate_score(listing, preference):
 
         elif difference <= 100:
 
-            score += 20
+            score += 25
 
             reasons.append(
-                "💶 Ligeramente superior al presupuesto"
+                "💶 Hasta 100€ sobre presupuesto"
             )
 
 
@@ -61,8 +52,10 @@ def calculate_score(listing, preference):
 
         else:
 
+            score -= 20
+
             reasons.append(
-                "💸 Superior al presupuesto"
+                "💸 Muy superior al presupuesto"
             )
 
 
@@ -96,7 +89,7 @@ def calculate_score(listing, preference):
             == 1
         ):
 
-            score += 15
+            score += 10
 
             reasons.append(
                 "🛏 Falta una habitación"
@@ -105,23 +98,14 @@ def calculate_score(listing, preference):
 
         else:
 
-            score += 5
-
             reasons.append(
                 "🛏 Menos habitaciones"
             )
 
 
-    else:
-
-        reasons.append(
-            "🛏 Habitaciones sin datos"
-        )
-
-
 
     # -------------------------
-    # Superficie (20 puntos)
+    # Superficie (15 puntos)
     # -------------------------
 
     if (
@@ -138,7 +122,7 @@ def calculate_score(listing, preference):
 
         if difference >= 0:
 
-            score += 20
+            score += 15
 
             reasons.append(
                 "📐 Buena superficie"
@@ -147,7 +131,7 @@ def calculate_score(listing, preference):
 
         elif difference >= -10:
 
-            score += 12
+            score += 8
 
             reasons.append(
                 "📐 Superficie cercana"
@@ -155,8 +139,6 @@ def calculate_score(listing, preference):
 
 
         else:
-
-            score += 5
 
             reasons.append(
                 "📐 Superficie inferior"
@@ -168,7 +150,7 @@ def calculate_score(listing, preference):
     # Barrio (20 puntos)
     # -------------------------
 
-    listing_neighborhood = (
+    neighborhood = (
         listing.neighborhood
         or ""
     )
@@ -185,37 +167,36 @@ def calculate_score(listing, preference):
         ]
 
 
+    if neighborhood in preferred_neighborhoods:
 
-    if listing_neighborhood in preferred_neighborhoods:
-
-        score += 30
+        score += 20
 
         reasons.append(
             "📍 Barrio elegido"
         )
 
 
-    elif listing_neighborhood in PRIORITY_NEIGHBORHOODS:
+    elif neighborhood in PRIORITY_NEIGHBORHOODS:
 
-        score += 20
+        score += 15
 
         reasons.append(
             "📍 Barrio prioritario"
         )
 
 
-    elif listing_neighborhood in SECONDARY_NEIGHBORHOODS:
+    elif neighborhood in SECONDARY_NEIGHBORHOODS:
 
-        score += 10
+        score += 8
 
         reasons.append(
             "📍 Barrio aceptable"
         )
 
 
-    elif listing_neighborhood in AVOID_NEIGHBORHOODS:
+    elif neighborhood in AVOID_NEIGHBORHOODS:
 
-        score -= 20
+        score -= 30
 
         reasons.append(
             "🚫 Barrio evitado"
@@ -224,7 +205,7 @@ def calculate_score(listing, preference):
 
 
     # -------------------------
-    # Amueblado (5 puntos)
+    # Extras vivienda
     # -------------------------
 
     if listing.furnished:
@@ -236,9 +217,36 @@ def calculate_score(listing, preference):
         )
 
 
+    if listing.balcony:
+
+        score += 5
+
+        reasons.append(
+            "🌿 Balcón"
+        )
+
+
+    if listing.terrace:
+
+        score += 8
+
+        reasons.append(
+            "🌞 Terraza"
+        )
+
+
+    if listing.elevator:
+
+        score += 3
+
+        reasons.append(
+            "🛗 Ascensor"
+        )
+
+
 
     # -------------------------
-    # Duración contrato (5 puntos)
+    # Contrato
     # -------------------------
 
     if (
@@ -246,10 +254,7 @@ def calculate_score(listing, preference):
         and listing.contract_months
     ):
 
-        if (
-            listing.contract_months
-            >= preference.duration_months
-        ):
+        if listing.contract_months >= preference.duration_months:
 
             score += 5
 
@@ -260,27 +265,15 @@ def calculate_score(listing, preference):
 
 
     # -------------------------
-    # Normalización final
+    # Limites
     # -------------------------
 
     if score < 0:
-
         score = 0
 
 
     if score > 100:
-
         score = 100
 
 
-    print(
-    "SCORE DEBUG",
-    listing.title,
-    listing.price,
-    listing.bedrooms,
-    listing.surface_m2,
-    listing.neighborhood,
-    score,
-    reasons
-    )
     return score, reasons
