@@ -19,11 +19,6 @@ from services.matcher import matches_preferences
 from services.search_service import update_all_sources
 from database.session import init_database
 
-
-print("MAIN CARGADO")
-print(__file__)
-
-
 init_database()
 
 
@@ -227,15 +222,6 @@ ranked_listings = []
 if preferences:
 
     preference = preferences[-1]
-
-
-    st.write(
-        "DEBUG PREFERENCE",
-        preference.max_price,
-        preference.min_bedrooms,
-        preference.min_surface,
-        preference.neighborhoods
-    )
 
 
     for listing in listings:
