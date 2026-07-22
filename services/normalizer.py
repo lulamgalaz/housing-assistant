@@ -1,3 +1,44 @@
+def normalize_neighborhood(value):
+
+    if not value:
+        return "N/A"
+
+
+    value = value.lower()
+
+
+    mappings = {
+
+        "dreta de l'eixample": "Eixample",
+
+        "antiga esquerra de l'eixample": "Eixample",
+
+        "nova esquerra de l'eixample": "Eixample",
+
+        "sant antoni": "Sant Antoni",
+
+        "gràcia": "Gràcia",
+
+        "poblenou": "Poblenou",
+
+        "poble-sec": "Poble Sec",
+
+        "pedralbes": "Les Corts",
+
+        "fort pienc": "Eixample",
+
+    }
+
+
+    for key, normalized in mappings.items():
+
+        if key in value:
+
+            return normalized
+
+
+    return value.title()
+
 def normalize_listing(item):
 
     return {
@@ -20,9 +61,10 @@ def normalize_listing(item):
             "price"
         ),
 
-        "neighborhood": item.get(
-            "neighborhood",
-            "N/A"
+        "neighborhood": normalize_neighborhood(
+        item.get(
+        "neighborhood"
+        )
         ),
 
         "district": item.get(
