@@ -1,3 +1,5 @@
+print("MAIN CARGADO")
+print(__file__)
 import sys
 from pathlib import Path
 
