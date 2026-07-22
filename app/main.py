@@ -54,8 +54,9 @@ st.markdown(
 
     h1 {
     font-family: "Outfit", sans-serif;
-    font-optical-sizing: 900px;
+    font-optical-sizing: auto;
     font-weight: 700;
+    font-size: 3.5rem;
     font-style: normal;
     text-align: center;
 }
