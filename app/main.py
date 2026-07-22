@@ -315,7 +315,7 @@ cards_html = "".join(
 
 )
 
-
+st.write(cards_html)
 st.markdown(
     f"""
     <div class="listings-grid">
