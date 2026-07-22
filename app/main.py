@@ -18,7 +18,10 @@ from services.preference_service import (
 from services.matcher import matches_preferences
 from services.search_service import update_all_sources
 from database.session import init_database
+
+
 init_database()
+
 
 favicon = Path(__file__).parent / "favicon.png"
 
@@ -234,14 +237,18 @@ st.header(
 listings = get_listings()
 preferences = get_preferences()
 
+
 st.write(f"Anuncios: {len(listings)}")
 st.write(f"Preferencias: {len(preferences)}")
 
+
 ranked_listings = []
+
 
 if preferences:
 
     preference = preferences[-1]
+
 
     for listing in listings:
 
@@ -250,34 +257,37 @@ if preferences:
             preference,
         )
 
-        if result["match"]:
 
-            ranked_listings.append(
-        {
-        "listing": listing,
-        "score": result["score"],
-        "reasons": result["reasons"],
-        "match": result["match"],
-        }
+        ranked_listings.append(
+            {
+                "listing": listing,
+                "score": result["score"],
+                "reasons": result["reasons"],
+                "match": result["match"],
+            }
         )
+
 
 ranked_listings.sort(
     key=lambda x: x["score"],
     reverse=True,
-            )
+)
+
 
 listings = ranked_listings
 
-st.write(f"Anuncios filtrados: {len(listings)}")
- 
+
+st.write(
+    f"Anuncios evaluados: {len(listings)}"
+)
+
+
 if not listings:
 
     st.info(
-        'No hay anuncios. Guardá una búsqueda y actualizá.'
+        "No hay anuncios guardados."
     )
 
-st.write("Anuncios:", len(get_listings()))
-st.write("Preferencias:", len(get_preferences()))
 
 cards_html = "".join(
 
@@ -306,6 +316,7 @@ cards_html = "".join(
     for index, item in enumerate(listings, start=1)
 
 )
+
 
 st.markdown(
     f"""
