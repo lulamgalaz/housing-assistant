@@ -1,5 +1,3 @@
-print("MAIN CARGADO")
-print(__file__)
 import sys
 from pathlib import Path
 
@@ -20,6 +18,10 @@ from services.preference_service import (
 from services.matcher import matches_preferences
 from services.search_service import update_all_sources
 from database.session import init_database
+
+
+print("MAIN CARGADO")
+print(__file__)
 
 
 init_database()
@@ -57,50 +59,39 @@ st.markdown(
 
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&family=Courier+Prime:wght@400;700&display=swap');
 
-
     h1 {
         font-family: "Outfit", sans-serif;
-        font-weight: 700;
-        font-size: 5rem !important;
-        text-align: center;
+        font-weight:700;
+        font-size:5rem !important;
+        text-align:center;
     }
-
 
     h2 {
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 700;
-        font-size: 2.5rem !important;
-        text-align: center;
+        font-family:"Space Grotesk", sans-serif;
+        font-weight:700;
+        font-size:2.5rem !important;
+        text-align:center;
     }
-
 
     p {
-        font-family: "Courier Prime", monospace;
+        font-family:"Courier Prime", monospace;
     }
-
-
-    [data-testid="stCaptionContainer"] {
-        text-align: center;
-    }
-
 
     .listings-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 0.75rem;
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+        gap:0.75rem;
     }
 
-
     .listing-card {
-        background-color: #1C1F26;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 10px;
-        padding: 0.85rem 1rem;
+        background-color:#1C1F26;
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:10px;
+        padding:0.85rem 1rem;
         display:flex;
         flex-direction:column;
         gap:0.3rem;
     }
-
 
     .listing-title {
         font-family:"Courier Prime", monospace;
@@ -109,26 +100,22 @@ st.markdown(
         color:#FAFAFA;
     }
 
-
     .listing-price {
         font-size:1.1rem;
         font-weight:700;
         color:#A78BFA;
     }
 
-
     .listing-meta {
         color:#B5B9C4;
         font-size:0.8rem;
     }
-
 
     .listing-badges {
         display:flex;
         flex-wrap:wrap;
         gap:0.3rem;
     }
-
 
     .listing-badge {
         background-color:rgba(124,92,255,0.15);
@@ -138,13 +125,11 @@ st.markdown(
         font-size:0.72rem;
     }
 
-
     .listing-link a {
         color:#7C5CFF;
         text-decoration:none;
         font-size:0.85rem;
     }
-
 
     </style>
     """,
@@ -162,10 +147,6 @@ st.caption(
     "Búsqueda de departamentos en Barcelona, filtrada por perfil"
 )
 
-
-# -------------------------
-# Selector de perfil
-# -------------------------
 
 profile_name = st.selectbox(
     "Perfil de búsqueda",
@@ -207,8 +188,6 @@ with col1:
             neighborhoods=BARRIOS_CANDIDATOS,
         )
 
-        st.session_state["active_profile"] = profile_name
-
         st.success(
             f"Búsqueda guardada: {profile_name}"
         )
@@ -231,9 +210,7 @@ with col2:
 st.divider()
 
 
-st.header(
-    "Anuncios"
-)
+st.header("Anuncios")
 
 
 listings = get_listings()
@@ -251,19 +228,29 @@ if preferences:
 
     preference = preferences[-1]
 
-st.write(
-    "DEBUG PREFERENCE",
-    preference.max_price,
-    preference.min_bedrooms,
-    preference.min_surface,
-    preference.neighborhoods
-)
+
+    st.write(
+        "DEBUG PREFERENCE",
+        preference.max_price,
+        preference.min_bedrooms,
+        preference.min_surface,
+        preference.neighborhoods
+    )
+
 
     for listing in listings:
 
         result = matches_preferences(
             listing,
             preference,
+        )
+
+
+        st.write(
+            "DEBUG SCORE",
+            listing.title,
+            result["score"],
+            result["reasons"]
         )
 
 
