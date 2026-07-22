@@ -238,8 +238,8 @@ preferences = get_preferences()
 st.write(f"Anuncios: {len(listings)}")
 st.write(f"Preferencias: {len(preferences)}")
 
-    ranked_listings = []
-    
+ranked_listings = []
+
 if preferences:
 
     preference = preferences[-1]
