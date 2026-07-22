@@ -235,15 +235,6 @@ st.header(
 
 
 listings = get_listings()
-for listing in listings[:5]:
-    st.write("-----")
-    st.write("Título:", listing.title)
-    st.write("Precio:", listing.price)
-    st.write("Habitaciones:", listing.bedrooms)
-    st.write("Superficie:", listing.surface_m2)
-    st.write("Barrio:", listing.neighborhood)
-    st.write("Amueblado:", listing.furnished)
-    st.write("Duración:", listing.contract_months)
 preferences = get_preferences()
 
 

@@ -264,5 +264,14 @@ def calculate_score(listing, preference):
         score = 100
 
 
-
+    print(
+    "SCORE DEBUG",
+    listing.title,
+    listing.price,
+    listing.bedrooms,
+    listing.surface_m2,
+    listing.neighborhood,
+    score,
+    reasons
+    )
     return score, reasons
