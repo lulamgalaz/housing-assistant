@@ -46,9 +46,6 @@ BARRIOS_CANDIDATOS = [
 ]
 
 
-init_database()
-
-
 st.markdown(
     """
     <style>
@@ -235,7 +232,7 @@ st.header(
 
 
 listings = get_listings()
-
+init_database()
 preferences = get_preferences()
 
 ranked_listings = []
