@@ -249,12 +249,12 @@ if preferences:
             preference,
         )
 
-    st.write(
-        listing.title,
-        result["match"],
-        result["reasons"]
-        )
-        
+         st.write(
+            listing.title,
+            result["match"],
+            result["reasons"]
+            )
+
         if result["match"]:
 
             ranked_listings.append(
