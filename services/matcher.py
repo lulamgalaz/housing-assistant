@@ -1,3 +1,4 @@
+print("MATCHER CARGADO")
 from services.score import calculate_score
 
 
