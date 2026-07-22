@@ -232,7 +232,6 @@ st.header(
 
 
 listings = get_listings()
-listings = get_listings()
 preferences = get_preferences()
 
 st.write(f"Anuncios: {len(listings)}")
@@ -258,21 +257,6 @@ if preferences:
         result = matches_preferences(
             listing,
             preference,
-        )
-
-        print(
-            listing.title,
-            listing.price,
-            listing.bedrooms,
-            result["match"],
-            result["score"],
-            result["reasons"],
-        )
-
-        st.write(
-            listing.title,
-            result["match"],
-            result["reasons"],
         )
 
         if result["match"]:
@@ -305,7 +289,7 @@ st.write("Preferencias:", len(get_preferences()))
 
 cards_html = "".join(
 
-                        "<div class=\"listing-card\">">
+    "<div class=\"listing-card\">"
 
     f"<div class=\"listing-title\">#{index} — {item['listing'].title}</div>"
 
