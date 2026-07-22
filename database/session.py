@@ -30,7 +30,7 @@ def get_session():
 
 
 def init_database():
-    from database.models import Listing
+    from database.models import Listing, Preference
 
     Base.metadata.create_all(bind=engine)
 
