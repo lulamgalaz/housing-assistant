@@ -8,10 +8,7 @@ sys.path.insert(
 
 import streamlit as st
 
-from database.session import (
-    init_database,
-    migrate_database,
-)
+from database.session import init_database
 from config.profile import SEARCH_PROFILES
 
 from services.listing_service import get_listings
@@ -50,7 +47,6 @@ BARRIOS_CANDIDATOS = [
 
 
 init_database()
-migrate_database()
 
 
 st.markdown(
