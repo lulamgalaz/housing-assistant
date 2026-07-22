@@ -64,7 +64,9 @@ st.markdown(
         font-family: "Space Grotesk", sans-serif;
         font-optical-sizing: auto;
         font-weight: 700;
+        font-size: 2.5rem !important;
         font-style: normal;
+        text-align: center;
     }
     p {
         font-family: "Courier Prime", monospace;
