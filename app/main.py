@@ -8,7 +8,6 @@ sys.path.insert(
 
 import streamlit as st
 
-from database.session import init_database
 from config.profile import SEARCH_PROFILES
 
 from services.listing_service import get_listings
@@ -18,7 +17,8 @@ from services.preference_service import (
 )
 from services.matcher import matches_preferences
 from services.search_service import update_all_sources
-
+from database.session import init_database
+init_database()
 
 favicon = Path(__file__).parent / "favicon.png"
 
@@ -232,7 +232,6 @@ st.header(
 
 
 listings = get_listings()
-init_database()
 preferences = get_preferences()
 
 ranked_listings = []
