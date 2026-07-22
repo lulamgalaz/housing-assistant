@@ -1,5 +1,3 @@
-raise Exception("ESTOY EN SERVICES/SCORE.PY")
-
 from config.neighborhoods import (
     PRIORITY_NEIGHBORHOODS,
     SECONDARY_NEIGHBORHOODS,
@@ -8,6 +6,15 @@ from config.neighborhoods import (
 
 
 def calculate_score(listing, preference):
+
+    print(
+        "ENTRANDO SCORE:",
+        listing.title,
+        listing.price,
+        listing.bedrooms,
+        listing.surface_m2,
+        listing.neighborhood,
+    )
 
     score = 0
     reasons = []

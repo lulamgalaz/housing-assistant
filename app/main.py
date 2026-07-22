@@ -251,6 +251,13 @@ if preferences:
 
     preference = preferences[-1]
 
+st.write(
+    "DEBUG PREFERENCE",
+    preference.max_price,
+    preference.min_bedrooms,
+    preference.min_surface,
+    preference.neighborhoods
+)
 
     for listing in listings:
 
