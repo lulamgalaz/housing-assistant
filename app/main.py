@@ -56,7 +56,7 @@ st.markdown(
     font-family: "Outfit", sans-serif;
     font-optical-sizing: auto;
     font-weight: 700;
-    font-size: 3.5rem;
+    font-size: 5rem !important;
     font-style: normal;
     text-align: center;
 }
