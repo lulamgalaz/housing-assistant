@@ -33,3 +33,30 @@ def init_database():
     from database.models import Listing
 
     Base.metadata.create_all(bind=engine)
+
+    def migrate_database():
+    from sqlalchemy import text
+
+    with engine.connect() as conn:
+
+        columns = conn.execute(
+            text("PRAGMA table_info(preferences)")
+        ).fetchall()
+
+        existing = [
+            column[1]
+            for column in columns
+        ]
+
+        migrations = {
+            "profile_name": "ALTER TABLE preferences ADD COLUMN profile_name VARCHAR(100)",
+            "min_surface": "ALTER TABLE preferences ADD COLUMN min_surface INTEGER",
+            "duration_months": "ALTER TABLE preferences ADD COLUMN duration_months INTEGER",
+        }
+
+        for name, sql in migrations.items():
+
+            if name not in existing:
+                conn.execute(text(sql))
+
+        conn.commit()
