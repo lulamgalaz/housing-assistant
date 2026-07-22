@@ -1,3 +1,4 @@
+print("SCORE CARGADO")
 from config.neighborhoods import (
     PRIORITY_NEIGHBORHOODS,
     SECONDARY_NEIGHBORHOODS,
