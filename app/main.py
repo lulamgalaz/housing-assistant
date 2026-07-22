@@ -249,7 +249,11 @@ if preferences:
             preference,
         )
 
-
+st.write(
+    listing.title,
+    result["match"],
+    result["reasons"]
+)
         if result["match"]:
 
             ranked_listings.append(
@@ -275,7 +279,7 @@ if not listings:
     st.info(
         'No hay anuncios. Guardá una búsqueda y actualizá.'
     )
-    
+
 st.write("Anuncios:", len(get_listings()))
 st.write("Preferencias:", len(get_preferences()))
 
