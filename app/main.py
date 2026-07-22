@@ -243,15 +243,6 @@ if preferences:
 
     preference = preferences[-1]
 
-    st.write("### Preferencia activa")
-    st.write(f"Perfil: {preference.profile_name}")
-    st.write(f"Ciudad: {preference.city}")
-    st.write(f"Precio máximo: {preference.max_price}")
-    st.write(f"Habitaciones mínimas: {preference.min_bedrooms}")
-    st.write(f"Superficie mínima: {preference.min_surface}")
-    st.write(f"Duración: {preference.duration_months}")
-    st.write(f"Barrios: {preference.neighborhoods}")
-
     for listing in listings:
 
         result = matches_preferences(
@@ -262,12 +253,13 @@ if preferences:
         if result["match"]:
 
             ranked_listings.append(
-                {
-                    "listing": listing,
-                    "score": result["score"],
-                    "reasons": result["reasons"],
-                }
-            )
+        {
+        "listing": listing,
+        "score": result["score"],
+        "reasons": result["reasons"],
+        "match": result["match"],
+        }
+        )
 
 ranked_listings.sort(
     key=lambda x: x["score"],
@@ -315,7 +307,6 @@ cards_html = "".join(
 
 )
 
-st.write(cards_html)
 st.markdown(
     f"""
     <div class="listings-grid">
