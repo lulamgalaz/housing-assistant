@@ -15,6 +15,17 @@ from services.preference_service import create_preference
 from services.preference_service import get_preferences
 from services.matcher import matches_preferences
 
+from pathlib import Path
+import streamlit as st
+
+favicon = Path(__file__).parent / "favicon.png"
+
+st.set_page_config(
+    page_title="Housing Assistant",
+    page_icon=str(favicon),
+    layout="wide"
+)
+
 # Barrios candidatos: buena conexion a Placa Catalunya (FGC hacia la UAB en
 # Bellaterra) sin quedar demasiado lejos de la L4 (UPF Ciutadella/Poblenou).
 # Es un punto de partida, no una lista cerrada -- ajustable a gusto.
