@@ -1,4 +1,5 @@
-print("SCORE CARGADO")
+raise Exception("ESTOY EN SERVICES/SCORE.PY")
+
 from config.neighborhoods import (
     PRIORITY_NEIGHBORHOODS,
     SECONDARY_NEIGHBORHOODS,
