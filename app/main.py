@@ -232,15 +232,26 @@ st.header(
 
 
 listings = get_listings()
+listings = get_listings()
 preferences = get_preferences()
 
-ranked_listings = []
+st.write(f"Anuncios: {len(listings)}")
+st.write(f"Preferencias: {len(preferences)}")
 
-
+    ranked_listings = []
+    
 if preferences:
 
     preference = preferences[-1]
 
+    st.write("### Preferencia activa")
+    st.write(f"Perfil: {preference.profile_name}")
+    st.write(f"Ciudad: {preference.city}")
+    st.write(f"Precio máximo: {preference.max_price}")
+    st.write(f"Habitaciones mínimas: {preference.min_bedrooms}")
+    st.write(f"Superficie mínima: {preference.min_surface}")
+    st.write(f"Duración: {preference.duration_months}")
+    st.write(f"Barrios: {preference.neighborhoods}")
 
     for listing in listings:
 
@@ -249,10 +260,19 @@ if preferences:
             preference,
         )
 
+        print(
+            listing.title,
+            listing.price,
+            listing.bedrooms,
+            result["match"],
+            result["score"],
+            result["reasons"],
+        )
+
         st.write(
             listing.title,
             result["match"],
-            result["reasons"]
+            result["reasons"],
         )
 
         if result["match"]:
@@ -265,16 +285,15 @@ if preferences:
                 }
             )
 
-
 ranked_listings.sort(
     key=lambda x: x["score"],
     reverse=True,
-)
-
+            )
 
 listings = ranked_listings
 
-
+st.write(f"Anuncios filtrados: {len(listings)}")
+ 
 if not listings:
 
     st.info(
@@ -286,7 +305,7 @@ st.write("Preferencias:", len(get_preferences()))
 
 cards_html = "".join(
 
-    "<div class=\"listing-card\">"
+                        "<div class=\"listing-card\">">
 
     f"<div class=\"listing-title\">#{index} — {item['listing'].title}</div>"
 
